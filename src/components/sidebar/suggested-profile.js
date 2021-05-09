@@ -23,9 +23,17 @@ const SuggestedProfile = ({ suggestedProfileDocId, username, profileId, userId, 
                 <div className="flex items-center">
                     <img
                         className="rounded-full w-8 flex mr-4"
-                        src={`/images/avatars/${username === 'nico' ? 'karl' : username}.jpg`}
-                        // alt={`${username} avatar`}
-                        alt=""
+                        src={`/images/avatars/${username !== 'orwell' &&
+                            username !== 'karl' &&
+                            username !== 'dali' &&
+                            username !== 'raphael'
+                            ? 'default' : username
+                            }.${username !== 'orwell' &&
+                                username !== 'karl' &&
+                                username !== 'dali' &&
+                                username !== 'raphael'
+                                ? 'png' : 'jpg'}`}
+                        alt={`${username} avatar`}
                     />
                 </div>
                 <div className="flex flex-col md:flex-row items-center align-items justify-between w-full">

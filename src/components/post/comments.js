@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { formatDistance } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
+import AddComment from './add-comment';
 
 const Comments = ({ docId, comments: allComments, posted, commentInput }) => {
 
@@ -16,7 +17,7 @@ const Comments = ({ docId, comments: allComments, posted, commentInput }) => {
                     &&
                     (
                         <p className="text-sm text-gray-base mb-1 cursor-pointer">
-                            View all {comments.length} comments
+                            Ver todos los comentarios
                         </p>
                     )
                 }
@@ -36,6 +37,12 @@ const Comments = ({ docId, comments: allComments, posted, commentInput }) => {
 
                 <p className="text-gray-base uppercase text-xs mt-2">Hace {formatDistance(posted, new Date(), { locale: es })}</p>
             </div>
+            <AddComment
+                docId={docId}
+                comments={comments}
+                setComments={setComments}
+                commentInput={commentInput}
+            />
         </>
     )
 }

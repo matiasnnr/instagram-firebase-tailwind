@@ -3,11 +3,12 @@ import FirebaseContext from '../context/firebase';
 import UserContext from '../context/user';
 import * as ROUTES from '../constants/routes';
 import { Link } from 'react-router-dom';
+import useUser from '../hooks/use-user';
 
 const Header = () => {
 
     const { firebase } = useContext(FirebaseContext);
-    const { user } = useContext(UserContext);
+    const { user } = useUser();
 
     return (
         <header className="h-16 bg-white border-b border-gray-primary mb-8 mx-2 lg:mx-0">
@@ -74,12 +75,20 @@ const Header = () => {
                                     </button>
 
                                     <div className="flex items-center cursor-pointer">
-                                        <Link to={`/profile/${user.displayName}`}>
+                                        <Link to={`/profile/${user.username}`}>
                                             <img
                                                 className="rounded-full h-8 w-8 flex"
-                                                // src={`/images/avatars/${user.displayName}.jpg`}
-                                                src={`/images/avatars/karl.jpg`}
-                                                alt={`${user.displayName} profile`}
+                                                src={`/images/avatars/${user.username !== 'orwell' &&
+                                                    user.username !== 'karl' &&
+                                                    user.username !== 'dali' &&
+                                                    user.username !== 'raphael'
+                                                    ? 'default' : user.username
+                                                    }.${user.username !== 'orwell' &&
+                                                        user.username !== 'karl' &&
+                                                        user.username !== 'dali' &&
+                                                        user.username !== 'raphael'
+                                                        ? 'png' : 'jpg'}`}
+                                                alt={`${user.username} profile`}
                                             />
                                         </Link>
                                     </div>

@@ -9,7 +9,16 @@ const Header = ({ username }) => {
                 <Link to={`/profile/${username}`} className="flex items-center" >
                     <img
                         className="rounded-full h-8 w-8 flex mr-3"
-                        src={`/images/avatars/${username}.jpg`}
+                        src={`/images/avatars/${username !== 'orwell' &&
+                            username !== 'karl' &&
+                            username !== 'dali' &&
+                            username !== 'raphael'
+                            ? 'default' : username
+                            }.${username !== 'orwell' &&
+                                username !== 'karl' &&
+                                username !== 'dali' &&
+                                username !== 'raphael'
+                                ? 'png' : 'jpg'}`}
                         alt={`${username} profile avatar`}
                     />
                     <p className="font-bold">{username}</p>

@@ -7,19 +7,17 @@ const Timeline = () => {
     // we need to get the logged in user's photos
     const { photos } = usePhotos();
 
-    console.log(`photos`, photos)
-
     // on loading the photos, we need to use react skeleton
     // if we have photos, render them (create a post component)
     // if the user has no photos, tell to create some photos
     return (
-        <div className="container col-span-2" >
+        <div className="container col-span-3 md:col-span-2 px-2 md:pl-2" >
             {
                 !photos
                     ?
                     (
                         <>
-                            <Skeleton count={4} height={500} className="w-full mb-5 ml-2 md:ml-0" />
+                            <Skeleton count={4} height={500} className="w-full mb-5" />
                         </>
                     )
                     :
