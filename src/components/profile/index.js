@@ -24,7 +24,7 @@ const UserProfile = ({ user }) => {
         }
 
         getProfileInfoAndPhotos();
-    }, []);
+    }, [user]);
 
     return (
         <>
