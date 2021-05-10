@@ -85,7 +85,10 @@ const CommentsModal = ({
                                 </h3>
                             </div>
 
-                            <div className="h-72 overflow-y-scroll">
+                            <div
+                                onClick={() => setShow(false)}
+                                className="h-72 overflow-y-scroll"
+                            >
                                 {
                                     comments.map((item) => (
                                         <p
