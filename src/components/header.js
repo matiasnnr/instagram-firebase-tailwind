@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import FirebaseContext from '../context/firebase';
-import UserContext from '../context/user';
 import * as ROUTES from '../constants/routes';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import useUser from '../hooks/use-user';
+import UploadImageModal from './modals/upload-image-modal';
 
 const Header = () => {
 
     const { firebase } = useContext(FirebaseContext);
     const { user } = useUser();
+    const [show, setShow] = useState(false);
+    const history = useHistory();
 
     return (
         <header className="h-16 bg-white border-b border-gray-primary mb-8 mx-2 lg:mx-0">
@@ -33,7 +36,7 @@ const Header = () => {
                                 <>
                                     <Link to={ROUTES.DASHBOARD} aria-label="Inicio">
                                         <svg
-                                            className="w-8 mr-6 text-black-light cursor-pointer"
+                                            className="w-6 md:w-8 mr-4 md:mr-6 text-black-light cursor-pointer"
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
@@ -50,16 +53,35 @@ const Header = () => {
 
                                     <button
                                         type="button"
+                                        title="Subir imagen"
+                                        onClick={() => setShow(true)}
+                                    >
+
+                                        <svg
+                                            className="w-6 md:w-8 mr-4 md:mr-6 text-black-light cursor-pointer"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                            />
+                                        </svg>
+                                    </button>
+
+                                    <button
+                                        type="button"
                                         title="Salir"
-                                        onClick={() => firebase.auth().signOut()}
-                                        onKeyDown={(event) => {
-                                            if (event.key === 'Enter') {
-                                                firebase.auth().signOut();
-                                            }
+                                        onClick={() => {
+                                            firebase.auth().signOut();
+                                            history.push(ROUTES.LOGIN)
                                         }}
                                     >
                                         <svg
-                                            className="w-8 mr-6 text-black-light cursor-pointer"
+                                            className="w-6 md:w-8 mr-4 md:mr-6 text-black-light cursor-pointer"
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
@@ -117,6 +139,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+            <UploadImageModal show={show} setShow={setShow} user={user} />
         </header>
     )
 }

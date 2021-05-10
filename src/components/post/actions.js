@@ -16,6 +16,8 @@ const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
     const handleToggleLiked = async () => {
         setToggleLiked(!toggleLiked);
 
+        setLikes(toggleLiked ? likes - 1 : likes + 1);
+
         await firebase
             .firestore()
             .collection('photos')
@@ -24,9 +26,6 @@ const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
                 likes: toggleLiked ? FieldValue.arrayRemove(userId) : FieldValue.arrayUnion(userId)
             });
 
-
-
-        setLikes(toggleLiked ? likes - 1 : likes + 1);
     }
 
     return (

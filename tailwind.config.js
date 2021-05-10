@@ -21,11 +21,38 @@ module.exports = {
       gray: {
         base: '#616161',
         background: '#fafafa',
-        primary: '#dbdbdb'
+        primary: '#dbdbdb',
+        // modal colors
+        modal_500: '#6B7280',
+        modal_50: '#F9FAFB',
       },
       red: {
         primary: '#ed4956'
       }
+    },
+    minWidth: {
+      '0': '0',
+      '1/4': '25%',
+      '1/2': '50%',
+      '3/4': '75%',
+      'full': '100%',
+      'lg': '32rem'
+    },
+    minHeight: {
+      '0': '0',
+      '1/4': '25%',
+      '1/2': '50%',
+      '3/4': '75%',
+      'full': '100%',
+      'lg': '32rem'
+    },
+    maxHeight: {
+      '0': '0',
+      '1/4': '25%',
+      '1/2': '50%',
+      '3/4': '75%',
+      'full': '100%',
+      'lg': '32rem'
     }
   },
   variants: {

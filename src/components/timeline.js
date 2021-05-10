@@ -11,7 +11,7 @@ const Timeline = () => {
     // if we have photos, render them (create a post component)
     // if the user has no photos, tell to create some photos
     return (
-        <div className="container col-span-3 md:col-span-2 px-2 md:pl-2" >
+        <div className="container col-span-2 px-2 md:pl-2" >
             {
                 !photos
                     ?

@@ -4,10 +4,12 @@ import { formatDistance } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
 import AddComment from './add-comment';
+import CommentsModal from '../../components/modals/comments-modal';
 
-const Comments = ({ docId, comments: allComments, posted, commentInput }) => {
+const Comments = ({ docId, comments: allComments, posted, commentInput, content, totalLikes, likedPhoto }) => {
 
     const [comments, setComments] = useState(allComments);
+    const [show, setShow] = useState(false);
 
     return (
         <>
@@ -16,9 +18,12 @@ const Comments = ({ docId, comments: allComments, posted, commentInput }) => {
                     comments.length >= 3
                     &&
                     (
-                        <p className="text-sm text-gray-base mb-1 cursor-pointer">
+                        <button
+                            className="text-sm text-gray-base mb-1 cursor-pointer"
+                            onClick={() => setShow(true)}
+                        >
                             Ver todos los comentarios
-                        </p>
+                        </button>
                     )
                 }
 
@@ -43,6 +48,17 @@ const Comments = ({ docId, comments: allComments, posted, commentInput }) => {
                 setComments={setComments}
                 commentInput={commentInput}
             />
+            <CommentsModal
+                docId={docId}
+                comments={comments}
+                setComments={setComments}
+                show={show}
+                setShow={setShow}
+                src={content.imageSrc}
+                caption={content.caption}
+                totalLikes={totalLikes}
+                likedPhoto={likedPhoto}
+            />
         </>
     )
 }
@@ -53,5 +69,17 @@ Comments.propTypes = {
     docId: PropTypes.string.isRequired,
     comments: PropTypes.array.isRequired,
     posted: PropTypes.number.isRequired,
-    commentInput: PropTypes.object.isRequired
+    commentInput: PropTypes.object.isRequired,
+    content: PropTypes.shape({
+        username: PropTypes.string.isRequired,
+        imageSrc: PropTypes.string.isRequired,
+        caption: PropTypes.string.isRequired,
+        docId: PropTypes.string.isRequired,
+        userLikedPhoto: PropTypes.bool.isRequired,
+        likes: PropTypes.array.isRequired,
+        comments: PropTypes.array.isRequired,
+        dateCreated: PropTypes.number.isRequired
+    }).isRequired,
+    totalLikes: PropTypes.number.isRequired,
+    likedPhoto: PropTypes.bool.isRequired
 }

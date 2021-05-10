@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import FirebaseContext from '../../context/firebase';
-import UserContext from '../../context/user';
+import useUser from '../../hooks/use-user';
 
-const AddComment = ({ docId, comments, setComments, commentInput }) => {
+const AddComment = ({ docId, comments, setComments, commentInput, photos, setPhotos }) => {
 
     const [comment, setComment] = useState('');
     const { firebase, FieldValue } = useContext(FirebaseContext);
     const {
-        user: { displayName }
-    } = useContext(UserContext);
+        user: { username: displayName }
+    } = useUser();
 
     const handleSubmitComment = (event) => {
         event.preventDefault();
@@ -18,8 +18,19 @@ const AddComment = ({ docId, comments, setComments, commentInput }) => {
         // put the new comment in there
         // add the old comments
         // then we have a new array with the new comment and the older comments
-        setComments([{ displayName, comment }, ...comments]); // this setComments come from the father component
+        setComments([...comments, { displayName, comment }]); // this setComments come from the father component
         setComment('');
+
+        // this is used to update comments from profile photos
+        if (photos) {
+            photos = photos.map((photo) => {
+                if (photo.docId === docId) {
+                    photo.comments = [...photo.comments, { displayName, comment }];
+                }
+                return photo;
+            });
+            setPhotos(photos);
+        }
 
         return firebase
             .firestore()
@@ -66,5 +77,5 @@ AddComment.propTypes = {
     docId: PropTypes.string.isRequired,
     comments: PropTypes.array.isRequired,
     setComments: PropTypes.func.isRequired,
-    commentInput: PropTypes.object.isRequired
+    commentInput: PropTypes.object
 }

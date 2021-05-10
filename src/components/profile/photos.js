@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
+import CommentsModal from '../modals/comments-modal';
 
-const Photos = ({ photos }) => {
+const Photos = ({ photos: photosArrayData }) => {
+
+    const [commentsModalObj, setCommentsModalObj] = useState({
+        docId: '',
+        src: '',
+        captiom: ''
+    });
+    const [photos, setPhotos] = useState(photosArrayData);
+    const [comments, setComments] = useState([]);
+    const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        setPhotos(photosArrayData);
+    }, [photosArrayData]);
+
     return (
         <div className="h-auto border-t border-gray-primary my-12 pt-4">
             <div className="grid grid-cols-3 gap-4 md:gap-8 justify-items-center md:mt-4 mb-12 px-4 md:px-8 lg:px-0">
@@ -22,10 +37,19 @@ const Photos = ({ photos }) => {
                                     <div
                                         className="relative group"
                                         key={photo.docId}
+                                        onClick={() => {
+                                            setComments(photo.comments);
+                                            setCommentsModalObj({
+                                                docId: photo.docId,
+                                                src: photo.imageSrc,
+                                                caption: photo.caption
+                                            });
+                                            setShow(true);
+                                        }}
                                     >
                                         <img
                                             key={`${photo.caption}-${photo.photoId}-${photo.userId}`}
-                                            className="object-cover"
+                                            className="object-cover h-28 w-28 sm:h-56 sm:w-56 md:h-80 md:w-80"
                                             src={photo.imageSrc}
                                             alt={photo.caption}
                                         />
@@ -40,7 +64,7 @@ const Photos = ({ photos }) => {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor"
-                                                    className="w-8 mr-4"
+                                                    className="w-4 md:w-8 mr-2 md:mr-4"
                                                 >
                                                     <path
                                                         fillRule="evenodd"
@@ -55,7 +79,7 @@ const Photos = ({ photos }) => {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor"
-                                                    className="w-8 mr-4"
+                                                    className="w-4 md:w-8 mr-2 md:mr-4"
                                                 >
                                                     <path
                                                         fillRule="evenodd"
@@ -81,6 +105,17 @@ const Photos = ({ photos }) => {
                     <p className="text-center text-2xl text-gray-primary">No hay publicaciones todavía...</p>
                 )
             }
+            <CommentsModal
+                docId={commentsModalObj.docId}
+                comments={comments}
+                setComments={setComments}
+                show={show}
+                setShow={setShow}
+                src={commentsModalObj.src}
+                caption={commentsModalObj.caption}
+                setPhotos={setPhotos}
+                photos={photos}
+            />
         </div>
     )
 }

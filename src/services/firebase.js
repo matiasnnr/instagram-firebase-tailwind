@@ -162,3 +162,32 @@ export async function toggleFollow(
         isFollowingProfile // true/false (am i currently following this person?)
     )
 }
+
+export async function createPost({ userId }, caption, imageSrc) {
+    await firebase
+        .firestore().collection('photos').add({
+            userId,
+            imageSrc,
+            caption,
+            likes: [],
+            comments: [],
+            userLatitude: '40.7128°',
+            userLongitude: '74.0060°',
+            dateCreated: Date.now()
+        });
+}
+
+// función que se encargará de subir el archivo
+export async function uploadImage(file, user) {
+    // creo una referencia al lugar donde guardaremos el archivo
+    var refStorage = firebase.storage().ref().child(`${user.username}-${user.userId}/${Date.now()}`);
+    // Comienzo la tarea de upload
+    var uploadTask = refStorage.put(file);
+
+    return uploadTask.then(snapshot => {
+        return snapshot.ref.getDownloadURL();
+    })
+        .then((url) => {
+            return url
+        });
+}
