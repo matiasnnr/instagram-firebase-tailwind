@@ -73,7 +73,8 @@ const Header = ({
                         &&
                         (
                             <button
-                                className="bg-blue-medium font-bold text-sm rounded text-white w-auto h-auto py-1 md:h-8 md:py-0 px-2"
+                                disabled={!Object.entries(loggedInUser).length}
+                                className={`bg-blue-medium font-bold text-sm rounded text-white w-auto h-auto py-1 md:h-8 md:py-0 px-2 ${!Object.entries(loggedInUser).length && 'cursor-default'}`}
                                 type="button"
                                 onClick={handleToggleFollow}
                             >

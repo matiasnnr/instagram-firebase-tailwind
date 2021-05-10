@@ -13,6 +13,8 @@ const Header = () => {
     const [show, setShow] = useState(false);
     const history = useHistory();
 
+    console.log(`user`, user);
+
     return (
         <header className="h-16 bg-white border-b border-gray-primary mb-8 mx-2 lg:mx-0">
             <div className="container mx-auto max-w-screen-lg h-full">
@@ -31,7 +33,7 @@ const Header = () => {
                     </div>
                     <div className="text-gray-700 text-center flex items-center align-items">
                         {
-                            user
+                            Object.entries(user).length
                                 ?
                                 <>
                                     <Link to={ROUTES.DASHBOARD} aria-label="Inicio">

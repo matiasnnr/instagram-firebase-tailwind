@@ -42,6 +42,7 @@ const SignUp = () => {
                     fullName,
                     emailAddress: emailAddress.toLowerCase(),
                     following: [],
+                    followers: [],
                     dateCreated: Date.now()
                 });
 
@@ -53,6 +54,7 @@ const SignUp = () => {
                 setError(error.message);
             }
         } else {
+            setUsername('');
             setError('Este nombre de usuario no está disponible, por favor intenta con otro.')
         }
 

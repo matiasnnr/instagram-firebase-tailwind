@@ -49,6 +49,7 @@ const AddComment = ({ docId, comments, setComments, commentInput, photos, setPho
             onSubmit={(event) => comment.length >= 1 ? handleSubmitComment(event) : event.preventDefault()}
         >
             <input
+                disabled={!displayName}
                 type="text"
                 aria-label="Agrega un comentario"
                 autoComplete="off"
@@ -60,7 +61,7 @@ const AddComment = ({ docId, comments, setComments, commentInput, photos, setPho
                 ref={commentInput}
             />
             <button
-                className={`text-sm font-bold text-blue-medium ${!comment && 'opacity-25'}`}
+                className={`text-sm font-bold text-blue-medium ${!comment && 'opacity-25'} ${!displayName && 'cursor-default'}`}
                 type="button"
                 disabled={comment.length < 1}
                 onClick={handleSubmitComment}
