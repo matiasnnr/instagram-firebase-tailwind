@@ -86,7 +86,6 @@ const CommentsModal = ({
                             </div>
 
                             <div
-                                onClick={() => setShow(false)}
                                 className="h-72 overflow-y-scroll"
                             >
                                 {
@@ -94,7 +93,7 @@ const CommentsModal = ({
                                         <p
                                             className="mb-1 flex justify-start text-justify"
                                             key={`${item.comment}-${item.displayName}`}>
-                                            <Link to={`/profile/${item.displayName}`}>
+                                            <Link to={`/profile/${item.displayName}`} onClick={() => setShow(false)}>
                                                 <span className="mr-1 font-bold">{item.displayName}</span>
                                             </Link>
                                             <span>{item.comment}</span>
